@@ -43,7 +43,14 @@ The application supports the following operations:
 
 ## Local Setup
 
-To work with the applicatio locally:
+To work with the application locally, first make sure the following are present:
+
+1. An AWS account, with the secret key and acess key.
+2. An s3 bucket with write and read permission.
+3. Docker and docker-compose are locally installed.
+4. Optionally an email address and email provider this project uses AWS SESS.
+
+Folow these steps to start the application:
 
 1. Clone the project repo:
 
@@ -51,8 +58,53 @@ To work with the applicatio locally:
   git clone https://github.com/twyle/photo-sharing-app.git
   ```
 
-2. Navigate to the project re:
+2. Navigate to the project directory, then create the project secrets:
 
   ```sh
-  git clone https://github.com/twyle/photo-sharing-app.git
+  cd photo-sharing-app
+  touch ./services/app/.env
   ```
+
+  And then paste the following:
+  ```sh
+  FLASK_DEBUG=True
+  FLASK_ENV=development
+  FLASK_APP=manage.py 
+  SECRET_KEY=secret-key 
+  POSTGRES_HOST=localhost
+  POSTGRES_USER=lyle
+  POSTGRES_PASSWORD=lyle
+  POSTGRES_DB=lyle
+  POSTGRES_PORT=5432
+  S3_BUCKET=<s3-bucket-name>
+  AWS_ACCESS_KEY=<aws-access-key>
+  AWS_ACCESS_SECRET=<aws-secret-key>
+  CELERY_BROKER_URL=
+  CELERY_RESULT_BACKEND
+  LOGGER_HOST=<ip-address>
+  LOGGER_PORT=
+  ```
+
+3. Start the logging service:
+  ```sh
+  docker-compose up -f services/logging/docker-compose.yml --build -d
+  ```
+
+  This takes a while
+
+4. Start the application:
+  ```sh
+  docker-compose -f docker-compose-dev up --build -d
+  ```
+
+5. Navigate to ```flask.localhost``` to see the application.
+
+## Deployment
+
+The application is containerized and deployed to AWS EC2. It uses AWS Route53 to direct traffic to an EC2 instance with docker and docker-compose installed. It uses traefik as a everse proxy. AWS S3 is used for image storage, AWS Postgres for data storage and these resources are provided using terraform.
+
+<img src="assets/images/search_service.png" class="img-responsive" alt="">
+
+## Author :black_nib:
+
+* **Lyle Okoth** <[twyle](https://github.com/twyle)>
