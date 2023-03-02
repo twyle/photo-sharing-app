@@ -21,4 +21,5 @@ lint:
 	@black services/app
 	@isort services/app
 	@flake8
+	@pydocstyle  services/app/api
 	@pylint --rcfile=.pylintrc ./services/app/api

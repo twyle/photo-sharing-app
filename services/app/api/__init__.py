@@ -1,3 +1,4 @@
+"""The main application package."""
 from dotenv import load_dotenv
 from flask import Flask
 

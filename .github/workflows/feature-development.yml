@@ -49,6 +49,9 @@ jobs:
         if [ -f services/app/requirements-dev.txt ]; then pip install -r services/app/requirements-dev.txt; fi
         if [ -f services/app/requirements.txt ]; then pip install -r services/app/requirements.txt; fi
 
+    - name: Run the pydocstyle linter
+      run: pydocstyle  services/app/api
+
     - name: Run the flake8 linter
       run: flake8
 
