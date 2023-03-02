@@ -14,21 +14,22 @@ jobs:
     environment:
       name: Test
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
-          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
-          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    # services:
+    #   postgres:
+    #     image: postgres
+    #     env:
+    #       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+    #       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+    #       POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+    #       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+    #     ports:
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
@@ -96,7 +97,7 @@ jobs:
 
     - name: Coverage Report
       run: |
-        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage xml -m; fi
+        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage xml; fi
 
   Test-Local:
 
@@ -105,21 +106,22 @@ jobs:
     environment:
       name: Development
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
-          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
-          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    # services:
+    #   postgres:
+    #     image: postgres
+    #     env:
+    #       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+    #       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+    #       POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+    #       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+    #     ports:
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
     needs: [Build]
 
     strategy:
