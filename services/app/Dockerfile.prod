@@ -1,0 +1,84 @@
+###########
+# BUILDER #
+###########
+
+# pull official base image
+FROM python:3.10-slim as builder
+
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc
+
+# install pip
+RUN pip install --upgrade pip
+
+# install development dependencies
+COPY requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
+
+# install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+#run the linters
+RUN black api/
+RUN isort .
+RUN flake8
+RUN pydocstyle  api/
+RUN pylint --rcfile=.pylintrc ./api
+
+#run the tests
+RUN python -m pytest
+
+# install python dependencies
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM python:3.10-slim
+
+# create directory for the app user
+RUN mkdir -p /home/app
+
+# create the app user
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+# install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends netcat
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+# copy project
+COPY . $APP_HOME
+
+# chown all the files to the app user
+RUN chown -R app:app $APP_HOME
+
+# change to the app user
+USER app
+
+EXPOSE 5000
+
+# run server
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "manage:app"]

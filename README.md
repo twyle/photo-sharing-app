@@ -48,5 +48,11 @@ To work with the applicatio locally:
 1. Clone the project repo:
 
   ```sh
-  git clone
+  git clone https://github.com/twyle/photo-sharing-app.git
+  ```
+
+2. Navigate to the project re:
+
+  ```sh
+  git clone https://github.com/twyle/photo-sharing-app.git
   ```
