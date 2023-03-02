@@ -174,5 +174,5 @@ jobs:
     - name: Test application
       run: |
         python services/app/manage.py run &
-        sleep 10
+        sleep 5s
         curl http://127.0.0.1:5000/health

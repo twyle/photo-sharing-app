@@ -1,4 +1,5 @@
 # photo-sharing-app
+
 > An application for sharing photos with your friends.
 
 <p align="center">
@@ -18,3 +19,9 @@
   <img title="Bandit badge" alt="Bandit badge" src="https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white" />
   <img title="Bandit badge" alt="Bandit badge" src="https://img.shields.io/badge/gunicorn-%298729.svg?style=flat&logo=gunicorn&logoColor=white" />
 </p>
+
+## Application Overview
+
+This is a social application that enables an authenticated and authorized user to share images and short messages with their friends. It is a responsive single page application built with python,flask, html, javascript and css. 
+
+<img src="assets/images/photo-sharing-app.png" class="img-responsive" alt="">
