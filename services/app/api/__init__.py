@@ -10,7 +10,7 @@ def create_app() -> Flask:
     
     @app.route('/health')
     def home():
-        return 'Hello world!'
+        return 'Hello world!', 200
     
     app.shell_context_processor({'app': app})
     
