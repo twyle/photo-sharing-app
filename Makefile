@@ -16,3 +16,9 @@ coverage:
 
 run:
 	@python services/app/manage.py run
+
+lint:
+	@black services/app
+	@isort services/app
+	@flake8
+	@pylint --rcfile=.pylintrc ./services/app/api

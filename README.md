@@ -40,3 +40,13 @@ The application supports the following operations:
 <p align=center>
   <img src="assets/videos/social-media-app.gif" />
 </p>
+
+## Local Setup
+
+To work with the applicatio locally:
+
+1. Clone the project repo:
+
+  ```sh
+  git clone
+  ```
