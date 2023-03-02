@@ -7,7 +7,7 @@ def test_app():
     app = create_app()
     with app.app_context():
         yield app
-        
+
 
 @pytest.fixture()
 def client(test_app):
