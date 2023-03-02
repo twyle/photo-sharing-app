@@ -85,18 +85,18 @@ jobs:
     #   run: |
     #     python ./services/app/manage.py create_db
 
-    # - name: Test with pytest
-    #   run: |
-    #     if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then python -m pytest; fi
+    - name: Test with pytest
+      run: |
+        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then python -m pytest; fi
 
-    # - name: Pytest Coverage
-    #   run: |
-    #     if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage run -m pytest; fi
-    #     if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage report -m; fi
+    - name: Pytest Coverage
+      run: |
+        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage run -m pytest; fi
+        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage report -m; fi
 
-    # - name: Coverage Report
-    #   run: |
-    #     if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage xml -m; fi
+    - name: Coverage Report
+      run: |
+        if [ -d ./services/app/tests ] || [ -d ./services/app/test ]; then coverage xml -m; fi
 
   Test-Local:
 

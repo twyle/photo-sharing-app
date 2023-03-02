@@ -9,8 +9,8 @@ def create_app() -> Flask:
     app = Flask(__name__)
     
     @app.route('/health')
-    def home():
-        return 'Hello world!'
+    def home() -> tuple[str, int]:
+        return 'Hello world!', 200
     
     app.shell_context_processor({'app': app})
     
