@@ -16,7 +16,7 @@ from flask import Flask
 
 from ..auth.views import auth
 from ..config.config import Config
-from ..extensions.extensions import bcrypt, cors, db, login_manager, ma, migrate
+from ..extensions.extensions import bcrypt, cors, db, login_manager, ma, mail, migrate
 from ..home.views import home
 
 load_dotenv()
@@ -71,3 +71,4 @@ def register_extensions(app: Flask):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+    mail.init_app(app)

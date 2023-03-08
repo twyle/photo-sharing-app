@@ -19,20 +19,46 @@
                 <form action="" method="post">
                     <div class="input-group">
 
-                        <div class="input-field">
-                            <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="email" placeholder="Email" id="">
-                        </div>
+                        {% if error_message %}
+                            <div class="input-field error">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
 
-                        <div class="input-field">
-                            <i class="uil uil-padlock"></i>
-                            <input type="password" name="password" placeholder="Password" id="">
-                        </div>
+                            <div class="input-field error">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
 
-                        <p>
-                            Don't have an account? <a href="{{ url_for('auth.register') }}">Create One</a> <br>
-                            Forgot your password? <a href="{{ url_for('auth.reset_request') }}">Click to reset</a>
-                        </p>
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                        {% endif %}
+
+                        {% if email %}
+                            <p>
+                                Account not activated? <a href="{{ url_for('auth.send_confirm_account_email', email=email) }}">Click to get activation link in your email.</a>
+                            </p>
+                        {% else %}
+
+                            <p>
+                                Don't have an account? <a href="{{ url_for('auth.register') }}">Create One</a> <br>
+                                Forgot your password? <a href="{{ url_for('auth.reset_request') }}">Click to reset</a>
+
+                            </p>
+
+                        {% endif %}
 
                     </div>
 

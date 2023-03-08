@@ -25,6 +25,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default="default.jpeg")
     password = db.Column(db.String(60), nullable=False)
+    account_activated = db.Column(db.Boolean, default=False)
 
     @staticmethod
     def user_with_name_exists(user_name: str) -> bool:

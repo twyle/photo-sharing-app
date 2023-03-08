@@ -29,6 +29,13 @@ class BaseConfig:
     db_conn_string = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
     SQLALCHEMY_DATABASE_URI = db_conn_string
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAIL_USERNAME = os.environ["MAIL_USERNAME"]
+    MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
+    MAIL_SERVER = os.environ["MAIL_SERVER"]
+    MAIL_PORT = os.environ["MAIL_PORT"]
+    MAIL_USE_SSL = os.environ["MAIL_USE_SSL"]
+    MAIL_DEFAULT_SENDER = os.environ["MAIL_DEFAULT_SENDER"]
+    PASSWORD_RESET_SALT = os.environ.get("PASSWORD_RESET_SALT", "salt")
 
 
 class DevelopmentConfig(BaseConfig):

@@ -87,6 +87,14 @@ input{
     padding: 15px 15px;
 }
 
+.error{
+    border: solid 1px red;
+}
+
+.error-msg{
+    color: red;
+}
+
 .input-field i{
     margin-left: 15px;
     color: #999;

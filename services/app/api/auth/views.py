@@ -21,10 +21,15 @@ send_reset_email:
 """
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required, logout_user
+from flask_login import current_user, login_required, logout_user
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_307_TEMPORARY_REDIRECT
-from .controller.auth import handle_create_user, handle_login_user
+from .controller.auth import (
+    handle_confirm_account,
+    handle_create_user,
+    handle_login_user,
+    handle_send_confirm_account_email,
+)
 
 auth = Blueprint("auth", __name__)
 
@@ -32,26 +37,34 @@ auth = Blueprint("auth", __name__)
 @auth.route("/register", methods=["GET", "POST"])
 def register():
     """Register a new user."""
+    if current_user.is_authenticated:
+        return redirect(url_for("home.home_page"))
     if request.method == "POST":
         return handle_create_user(request.form)
     return render_template("auth/register.html"), HTTP_200_OK
 
 
+@auth.route("/send_confirm_account_email", methods=["GET"])
 def send_confirm_account_email():
-    """Send the user registration email."""
-    return "Email account confirm email."
+    """Send account confirmation email."""
+    email = request.args.get("email")
+    return handle_send_confirm_account_email(email)
 
 
 @auth.route("/confirm_account", methods=["GET"])
 def confirm_account():
     """Confirm a newly created account."""
-    # get userid and token
-    return "Acount confirmed.", HTTP_200_OK
+    if current_user.account_activated:
+        return redirect(url_for("home.home_page"))
+    token = request.args.get("token")
+    return handle_confirm_account(token)
 
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     """Login a registered user."""
+    if current_user.is_authenticated:
+        return redirect(url_for("home.home_page"))
     if request.method == "POST":
         return handle_login_user(request.form)
     return render_template("auth/login.html"), HTTP_200_OK

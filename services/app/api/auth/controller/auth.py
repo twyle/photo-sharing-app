@@ -4,7 +4,7 @@ Has the following methods:
 handle_create_user:
 create_user:
 """
-from flask import redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_user
 
 from ...extensions.extensions import bcrypt, db
@@ -19,7 +19,7 @@ from .exceptions import (
     PasswordMissmatchException,
     PasswordTooShortException,
 )
-from .helpers import is_email_address_format_valid, is_password_valid
+from .helpers import is_email_address_format_valid, is_password_valid, send_confirm_account_email
 
 
 def create_user(user_data: dict):
@@ -69,6 +69,26 @@ def handle_create_user(user_data: dict):
             "auth/register.html", error_message={"confirm_password": str(e)}
         )
 
+    return redirect(url_for("auth.login", email=user_data["email"]))
+
+
+def handle_send_confirm_account_email(email: str):
+    """Send the account activation email."""
+    send_confirm_account_email(email)
+    return redirect(url_for("auth.login"))
+
+
+def handle_confirm_account(token: str):
+    """Activate a user account."""
+    user = User.verify_reset_token(token)
+    if not user:
+        print(f"That is an invalid or expired token! {token}")
+        flash(
+            "That is an invalid or expired token! Another one has been sent to your email."
+        )
+        return redirect(url_for("auth.login"))
+    user.account_activated = True
+    db.session.commit()
     return redirect(url_for("auth.login"))
 
 
@@ -87,9 +107,16 @@ def handle_login_user(user_credentials: dict):
         login.
     """
     user = User.query.filter_by(email=user_credentials["email"]).first()
-    print(user)
+    if user and not user.account_activated:
+        return render_template(
+            "auth/login.html",
+            error_message="Your account is not activated.",
+            email=user.email,
+        )
     if user and bcrypt.check_password_hash(user.password, user_credentials["password"]):
         login_user(user)
         next_page = request.args.get("next")
         return redirect(next_page) if next_page else redirect(url_for("home.home_page"))
-    return render_template("auth/login.html")
+    return render_template(
+        "auth/login.html", error_message="Invalid username or password."
+    )
