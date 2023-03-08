@@ -16,15 +16,8 @@ from flask import Flask
 
 from ..auth.views import auth
 from ..config.config import Config
-
-from ..extensions.extensions import (
-    db,
-    ma,
-    bcrypt,
-    migrate,
-    cors,
-    login_manager
-)
+from ..extensions.extensions import bcrypt, cors, db, login_manager, ma, migrate
+from ..home.views import home
 
 load_dotenv()
 
@@ -64,6 +57,7 @@ def register_blueprints(app: Flask) -> bool:
     bool:
         Whether all the blueprints were registered.
     """
+    app.register_blueprint(home)
     app.register_blueprint(auth, url_prefix="/auth")
     return True
 
@@ -76,4 +70,4 @@ def register_extensions(app: Flask):
     ma.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"

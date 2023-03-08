@@ -2,10 +2,10 @@
 from dotenv import load_dotenv
 from flask import Flask
 
-from .helpers.helpers import register_blueprints, set_configuration, register_extensions
-from .utils.http_status_codes import HTTP_200_OK
-from .extensions.extensions import db, login_manager
 from .auth.models.user import User
+from .extensions.extensions import db, login_manager
+from .helpers.helpers import register_blueprints, register_extensions, set_configuration
+from .utils.http_status_codes import HTTP_200_OK
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ def create_app() -> Flask:
     set_configuration(app)
     register_extensions(app)
     register_blueprints(app=app)
-    
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
