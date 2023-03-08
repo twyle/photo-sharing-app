@@ -38,7 +38,7 @@ def set_configuration(app):
     bool:
         Whether the config was set up successfully.
     """
-    config_name = os.environ.get("FLASK_ENV", "development")
+    config_name = os.environ.get("FLASK_ENV")
     app.config.from_object(Config[config_name])
 
     return True
