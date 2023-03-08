@@ -34,3 +34,7 @@ class InvalidPasswordFormatException(Exception):
 
 class PasswordMissmatchException(Exception):
     """Raised when the two passwords do not match."""
+
+
+class InvalidLoginDetails(Exception):
+    """Raised when the login details are invalid."""

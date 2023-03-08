@@ -15,8 +15,11 @@ from .exceptions import (
     NameTooShortException,
     PasswordMissmatchException,
     PasswordTooShortException,
+    InvalidLoginDetails
 )
 from .helpers import is_email_address_format_valid, is_password_valid
+from ..models.user import User
+from ...extensions.extensions import bcrypt, db
 
 
 def create_user(user_data: dict):
@@ -25,16 +28,26 @@ def create_user(user_data: dict):
         raise NameTooShortException("The user name has to be atleast 2 characters.")
     if len(user_data["name"]) > 20:
         raise NameTooLongException("The user name has to be at most 20 characters.")
-    # Check if name exists.
+    if User.user_with_name_exists(user_data['name']):
+        raise NameExistsException(f'A user with the name {user_data["name"]} already exists.')
     if not is_email_address_format_valid(user_data["email"]):
         raise InvalidEmailAddressFormatException("The email address format is invalid.")
-    # Check if email exists.
+    if User.user_with_email_exists(user_data["email"]):
+        raise EmailAddressExistsException(f'A user with the email {user_data["email"]} already exists.')                                     
     if len(user_data["password"]) < 6:
         raise PasswordTooShortException("The password has to be atleast 6 characters.")
     if not is_password_valid(user_data["password"]):
         raise InvalidPasswordFormatException("The password has to be alphanumeric.")
     if user_data["password"] != user_data["confirm_password"]:
         raise PasswordMissmatchException("The passwords do not match.")
+    hashed_password = bcrypt.generate_password_hash(user_data["password"]).decode('utf-8')
+    user = User(
+        username=user_data["name"],
+        email=user_data["email"],
+        password=hashed_password
+    )
+    db.session.add(user)
+    db.session.commit()
 
 
 def handle_create_user(user_data: dict):
@@ -53,3 +66,27 @@ def handle_create_user(user_data: dict):
         )
 
     return redirect(url_for("auth.login"))
+
+
+def login_user(user_credentials: dict):
+    """Log in a registered user."""
+
+
+def handle_login_user(user_credentials: dict):
+    """Handle the POST request to log in a registered user.
+    
+    Parameters
+    ----------
+    user_credentials: dict
+        The dictionary containing user credentials.
+        
+    Returns
+    -------
+    tuple: (str, http_response_code)
+        Redirect to homepage on successful login or login page on unsuccessfull
+        login.
+    """
+    try:
+        login_user(user_credentials)
+    except InvalidLoginDetails as e:
+        return render_template('auth/login.html', error=str(e))
