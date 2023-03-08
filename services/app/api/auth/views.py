@@ -23,6 +23,7 @@ send_reset_email:
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_307_TEMPORARY_REDIRECT
+from .controller.auth import handle_create_user
 
 auth = Blueprint("auth", __name__)
 
@@ -30,6 +31,8 @@ auth = Blueprint("auth", __name__)
 @auth.route("/register", methods=["GET", "POST"])
 def register():
     """Register a new user."""
+    if request.method == "POST":
+        return handle_create_user(request.form)
     return render_template("auth/register.html"), HTTP_200_OK
 
 

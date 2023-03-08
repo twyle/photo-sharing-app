@@ -30,7 +30,8 @@
                         </div>
 
                         <p>
-                            Forgot your password? <a href="#">Click to reset</a>
+                            Don't have an account? <a href="{{ url_for('auth.register') }}">Create One</a> <br>
+                            Forgot your password? <a href="{{ url_for('auth.reset_request') }}">Click to reset</a>
                         </p>
 
                     </div>

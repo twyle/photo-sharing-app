@@ -16,37 +16,85 @@
 
                 <h1>Sign Up</h1>
 
-                <form action="">
+                <form action="" method="post">
                     <div class="input-group">
 
-                        <div class="input-field">
-                            <i class="uil uil-user-circle"></i>
-                            <input type="text" name="" placeholder="Name" id="">
-                        </div>
+                        {% if error_message and 'name' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-user-circle"></i>
+                                <input type="text" name="name" placeholder="NameError">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['name'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-user-circle"></i>
+                                <input type="text" name="name" placeholder="Name">
+                            </div>
+                        {% endif %}
 
-                        <div class="input-field">
-                            <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="" placeholder="Email" id="">
-                        </div>
+                        {% if error_message and 'email' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['email'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+                        {% endif %}
 
-                        <div class="input-field">
-                            <i class="uil uil-padlock"></i>
-                            <input type="password" name="" placeholder="Password" id="">
-                        </div>
+                        {% if error_message and 'password' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['password'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                        {% endif %}
 
-                        <div class="input-field">
-                            <i class="uil uil-padlock"></i>
-                            <input type="password" name="" placeholder="Confirm Password" id="">
-                        </div>
+                        {% if error_message and 'confirm_password' in error_message.keys() %}
+                            <div class="input-field errors">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="confirm_password" placeholder="Confirm Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['confirm_password'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="confirm_password" placeholder="Confirm Password" id="">
+                            </div>
+                        {% endif %}
 
                         <p>
-                            Already have an account? <a href="#">Login</a>
+                            Already have an account? <a href="{{ url_for('auth.login') }}">Login</a>
                         </p>
 
                     </div>
 
                     <div class="btn-field">
-                        <button type="button">Sign Up</button>
+                        <button type="submit">Sign Up</button>
                     </div>
 
                 </form>
