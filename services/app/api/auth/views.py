@@ -21,9 +21,10 @@ send_reset_email:
 """
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import login_required, logout_user
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_307_TEMPORARY_REDIRECT
-from .controller.auth import handle_create_user
+from .controller.auth import handle_create_user, handle_login_user
 
 auth = Blueprint("auth", __name__)
 
@@ -51,7 +52,8 @@ def confirm_account():
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     """Login a registered user."""
-    # ensure account is confirmed
+    if request.method == "POST":
+        return handle_login_user(request.form)
     return render_template("auth/login.html"), HTTP_200_OK
 
 
@@ -67,7 +69,9 @@ def reset_password():
     return render_template("auth/resetpassword.html"), HTTP_200_OK
 
 
+@login_required
 @auth.route("/logout", methods=["GET"])
 def logout():
     """Logout a logged in user."""
+    logout_user()
     return redirect(url_for("auth.login")), HTTP_307_TEMPORARY_REDIRECT

@@ -5,13 +5,13 @@ handle_create_user:
 create_user:
 """
 from flask import redirect, render_template, request, url_for
+from flask_login import login_user
 
 from ...extensions.extensions import bcrypt, db
 from ..models.user import User
 from .exceptions import (
     EmailAddressExistsException,
     InvalidEmailAddressFormatException,
-    InvalidLoginDetails,
     InvalidPasswordFormatException,
     NameExistsException,
     NameTooLongException,
@@ -72,21 +72,6 @@ def handle_create_user(user_data: dict):
     return redirect(url_for("auth.login"))
 
 
-def login_user(user_credentials: dict):
-    """Log in a registered user.
-
-    Parameters
-    ----------
-    user_credentials: dict
-        The dictionary containing user credentials.
-    """
-    user = User.query.filter_by(email=user_credentials["email"]).first()
-    if user and bcrypt.check_password_hash(user.password, user_credentials["password"]):
-        login_user(user)
-    else:
-        raise InvalidLoginDetails("The login details are invalid.")
-
-
 def handle_login_user(user_credentials: dict):
     """Handle the POST request to log in a registered user.
 
@@ -101,9 +86,10 @@ def handle_login_user(user_credentials: dict):
         Redirect to homepage on successful login or login page on unsuccessfull
         login.
     """
-    try:
-        login_user(user_credentials)
-    except InvalidLoginDetails as e:
-        return render_template("auth/login.html", error=str(e))
-    next_page = request.args.get("next")
-    return redirect(next_page) if next_page else redirect(url_for("home.home_page"))
+    user = User.query.filter_by(email=user_credentials["email"]).first()
+    print(user)
+    if user and bcrypt.check_password_hash(user.password, user_credentials["password"]):
+        login_user(user)
+        next_page = request.args.get("next")
+        return redirect(next_page) if next_page else redirect(url_for("home.home_page"))
+    return render_template("auth/login.html")
