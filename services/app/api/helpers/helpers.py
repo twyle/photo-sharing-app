@@ -16,8 +16,10 @@ from flask import Flask
 
 from ..auth.views import auth
 from ..config.config import Config
+from ..exceptions.exceptions import DatabaseNotConnectedException
 from ..extensions.extensions import bcrypt, cors, db, login_manager, ma, mail, migrate
 from ..home.views import home
+from ..utils.utils import check_if_database_exists, create_db_conn_string
 
 load_dotenv()
 
@@ -42,6 +44,13 @@ def set_configuration(app):
     app.config.from_object(Config[config_name])
 
     return True
+
+
+def check_configuration():
+    """Check if all the configs are set."""
+    # Check database connection
+    if not check_if_database_exists(create_db_conn_string()):
+        raise DatabaseNotConnectedException("The database is not connected!")
 
 
 def register_blueprints(app: Flask) -> bool:
