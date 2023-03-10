@@ -11,15 +11,22 @@ from ...extensions.extensions import bcrypt, db
 from ..models.user import User
 from .exceptions import (
     EmailAddressExistsException,
+    EmailDoesNotExistsException,
     InvalidEmailAddressFormatException,
     InvalidPasswordFormatException,
+    InvalidToken,
     NameExistsException,
     NameTooLongException,
     NameTooShortException,
     PasswordMissmatchException,
     PasswordTooShortException,
 )
-from .helpers import is_email_address_format_valid, is_password_valid, send_confirm_account_email
+from .helpers import (
+    is_email_address_format_valid,
+    is_password_valid,
+    send_confirm_account_email,
+    send_reset_password_email,
+)
 
 
 def create_user(user_data: dict):
@@ -120,3 +127,82 @@ def handle_login_user(user_credentials: dict):
     return render_template(
         "auth/login.html", error_message="Invalid username or password."
     )
+
+
+def reset_request(user_data: dict):
+    """Send the password reset email.
+
+    Parameters
+    ----------
+    user_data: dict
+        The user details, in this case the email.
+    """
+    if not is_email_address_format_valid(user_data["email"]):
+        raise InvalidEmailAddressFormatException("The email address format is invalid.")
+    if not User.user_with_email_exists(user_data["email"]):
+        raise EmailDoesNotExistsException(
+            f'There is no user with email {user_data["email"]}.'
+        )
+    send_reset_password_email(user_data["email"])
+    flash("An email has been sent with instructions on how to rewset your password!")
+    return redirect(url_for("auth.reset_password"))
+
+
+def handle_reset_request(user_data: dict):
+    """Handle the request to rest the user password.
+
+    Parameters
+    ----------
+    user_data: dict
+        The user details, in this case the email.
+    """
+    try:
+        return reset_request(user_data)
+    except (InvalidEmailAddressFormatException, EmailDoesNotExistsException) as e:
+        return render_template("auth/resetrequest.html", error_message=str(e))
+
+
+def reset_password(token: str, user_data: dict):
+    """Reset the user password.
+
+    token: str
+        The password reset token.
+    user_data: dict
+        The dictionary containing the new password.
+    """
+    user = User.verify_reset_token(token)
+    if not user:
+        raise InvalidToken("That is an invalid or expired token!")
+    if len(user_data["password"]) < 6:
+        raise PasswordTooShortException("The password has to be atleast 6 characters.")
+    if not is_password_valid(user_data["password"]):
+        raise InvalidPasswordFormatException("The password has to be alphanumeric.")
+    if user_data["password"] != user_data["confirm_password"]:
+        raise PasswordMissmatchException("The passwords do not match.")
+    hashed_password = bcrypt.generate_password_hash(user_data["password"]).decode(
+        "utf-8"
+    )
+    user.password = hashed_password
+    db.session.commit()
+    flash("Your password has been updated. You are now able to log in!")
+    return redirect(url_for("auth.login"))
+
+
+def handle_reset_password(token: str, user_data: dict):
+    """Handle the POST request to reset the user password.
+
+    token: str
+        The password reset token.
+    user_data: dict
+        The dictionary containing the new password.
+    """
+    try:
+        return reset_password(token, user_data)
+    except InvalidToken as e:
+        return render_template("auth/resetpassword.html", errors={"token": str(e)})
+    except (PasswordTooShortException, InvalidPasswordFormatException) as e:
+        return render_template("auth/resetpassword.html", errors={"password": str(e)})
+    except PasswordMissmatchException as e:
+        return render_template(
+            "auth/resetpassword.html", errors={"confirm_password": str(e)}
+        )

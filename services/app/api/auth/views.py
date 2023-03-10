@@ -28,6 +28,8 @@ from .controller.auth import (
     handle_confirm_account,
     handle_create_user,
     handle_login_user,
+    handle_reset_password,
+    handle_reset_request,
     handle_send_confirm_account_email,
 )
 
@@ -73,12 +75,20 @@ def login():
 @auth.route("/reset_request", methods=["GET", "POST"])
 def reset_request():
     """Handle the request to reset the password."""
+    if current_user.is_authenticated:
+        return redirect(url_for("home.home_page"))
+    if request.method == "POST":
+        return handle_reset_request(request.form)
     return render_template("auth/resetrequest.html"), HTTP_200_OK
 
 
 @auth.route("/reset_password", methods=["GET", "POST"])
 def reset_password():
     """Reset the user password."""
+    if current_user.is_authenticated:
+        return redirect(url_for("home.home_page"))
+    if request.method == "POST":
+        return handle_reset_password(request.args.get("token"), request.form)
     return render_template("auth/resetpassword.html"), HTTP_200_OK
 
 

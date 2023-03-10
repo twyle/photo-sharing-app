@@ -38,3 +38,11 @@ class PasswordMissmatchException(Exception):
 
 class InvalidLoginDetails(Exception):
     """Raised when the login details are invalid."""
+
+
+class EmailDoesNotExistsException(Exception):
+    """Raised when a non-existing email is used during authentication."""
+
+
+class InvalidToken(Exception):
+    """Raised when the token has expired."""

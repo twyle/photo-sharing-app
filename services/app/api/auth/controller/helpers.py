@@ -129,3 +129,16 @@ def send_confirm_account_email(email_address: str):
     user = User.query.filter_by(email=email_address).first()
     send_email(user, "account_confirmation")
     return "Email account confirm email."
+
+
+def send_reset_password_email(email_address: str):
+    """Send the password reset email email.
+
+    Parameters
+    ----------
+    email_address: str
+        The users email address.
+    """
+    user = User.query.filter_by(email=email_address).first()
+    send_email(user, "password_reset")
+    return "Password reset email."

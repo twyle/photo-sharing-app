@@ -16,18 +16,30 @@
 
                 <h1>Password Reset Request</h1>
 
-                <form action="">
+                <form action="" method="post">
                     <div class="input-group">
 
-                        <div class="input-field">
-                            <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="" placeholder="Email" id="">
-                        </div>
+                        {% if error_message %}
+                            <div class="input-field error">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="EmailError" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+                        {% endif %}
 
                     </div>
 
                     <div class="btn-field">
-                        <button type="button">Request Password Reset</button>
+                        <button type="submit">Request Password Reset</button>
                     </div>
 
                 </form>
