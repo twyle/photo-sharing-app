@@ -16,8 +16,17 @@
 
                 <h1>Sign Up</h1>
 
-                <form action="" method="post">
+                <form action="" method="post" enctype = "multipart/form-data">
                     <div class="input-group">
+
+                        <div class="user-profile-image">
+                            <div class="profile-photo update">
+                                <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="" class="user-avatar">
+                            </div>
+    
+                            <input type="file" class="avatar-input" id="avatar" name="file"
+                                accept="image/png, image/jpeg">
+                        </div>
 
                         {% if error_message and 'name' in error_message.keys() %}
                             <div class="input-field error">
@@ -102,6 +111,8 @@
             </div>
         </div>
     </main>
+
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 
 </body>
 </html>

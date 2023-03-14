@@ -75,8 +75,10 @@ def handle_create_user(user_data: dict):
         return render_template(
             "auth/register.html", error_message={"confirm_password": str(e)}
         )
-
-    return redirect(url_for("auth.login", email=user_data["email"]))
+    else:
+        return redirect(
+            url_for("auth.send_confirm_account_email", email=user_data["email"])
+        )
 
 
 def handle_send_confirm_account_email(email: str):

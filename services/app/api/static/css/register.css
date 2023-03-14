@@ -71,6 +71,27 @@ main .container{
     transform: translate(-50%);
 }
 
+.profile-photo{ 
+    width: 5rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user-profile-image{
+    display: flex;
+    align-items: center;
+}
+
+.custom-file-upload{
+    margin-left: 1rem;
+}
+
+/* .avatar-input{
+    display: none;
+} */
+
 .input-field{
     background: #eaeaea;
     margin: 15px 0;
