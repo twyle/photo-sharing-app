@@ -23,7 +23,7 @@
             <div class="create">
                 <label class="btn btn-primary" for="create post">Create Post</label>
                 <div class="profile-photo">
-                    <img src="./img/profile-0.jpg" alt="">
+                    <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                 </div>
             </div>
         </div>
@@ -40,12 +40,12 @@
             <div class="user-profile">
                 <div class="profile">
                     <div class="profile-photo">
-                        <img src="./img/profile-0.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                     </div>
                     <div class="handle">
-                        <h4>lyle</h4>
+                        <h4>{{ current_user.username }}</h4>
                         <p class="text muted">
-                            @lyle
+                            @{{current_user.username}}
                         </p>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
 
                 <div class="story">
                     <div class="profile-photo">
-                        <img src="./img/profile-8.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/profile-8.jpg') }}" alt="">
                     </div>
                     <p class="name">
                         Your story
@@ -221,7 +221,7 @@
 
                 <div class="story">
                     <div class="profile-photo">
-                        <img src="./img/profile-9.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/profile-9.jpg') }}" alt="">
                     </div>
                     <p class="name">
                         James Otieno
@@ -230,7 +230,7 @@
 
                 <div class="story">
                     <div class="profile-photo">
-                        <img src="./img/profile-10.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
                     </div>
                     <p class="name">
                         Michael Owino
@@ -239,7 +239,7 @@
 
                 <div class="story">
                     <div class="profile-photo">
-                        <img src="./img/profile-11.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
                     </div>
                     <p class="name">
                         Jano Mureithi
@@ -248,7 +248,7 @@
 
                 <div class="story">
                     <div class="profile-photo">
-                        <img src="./img/profile-12.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
                     </div>
                     <p class="name">
                         Martha Koome
@@ -257,24 +257,6 @@
 
             </div>
             <!----------------- END OF STORIES ----------------------->
-
-            <!-- <div class="create-post">
-                
-                <div class="profile-photo">
-                    <img src="./img/profile-0.jpg" alt="">
-                </div>
-
-                <div class="create">
-                    <input type="text" name="" id="create-post" placeholder="What's on your mind, Lyle?">
-                    <label class="custom-file-upload">
-                        <input type="file" onchange="previewImage"/>
-                        <i class="uil uil-image-plus"></i> 
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="cr">Post</button>
-                
-            </div> -->
         
                     <div class="very-new-post" id="11111">
         
@@ -285,11 +267,11 @@
                         <div class="create-post" id="new-post">
                         
                             <div class="profile-photo">
-                                <img src="./img/profile-2.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                             </div>
             
                             <div class="create">
-                                <input type="text" name="" id="create-post" placeholder="What's on your mind, Lyle?">
+                                <input type="text" name="" id="create-post" placeholder="What's on your mind, {{ current_user.username }}?">
                                 <label class="custom-file-upload">
                                     <input type="file" onchange="previewImage(event);"/>
                                     <i class="uil uil-image-plus"></i> 
@@ -315,7 +297,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="./img/profile-13.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-13.jpg') }}" alt="">
                             </div>
                             <div class="ingo">
                                 <h3 class="user-name">Lana Rose</h3>
@@ -366,7 +348,7 @@
                     </div>
 
                     <div class="photo">
-                        <img src="./img/feed-1.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/feed-1.jpg') }}" alt="">
                     </div>
 
                     <div class="action-buttons">
@@ -409,7 +391,7 @@
                         <div class="create-post">
                 
                             <div class="profile-photo">
-                                <img src="./img/profile-0.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                             </div>
             
                             <div class="create">
@@ -422,13 +404,13 @@
 
                     <div class="liked-by">
                         <span>
-                            <img src="./img/profile-10.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-11.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-12.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
                         </span>
                         <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
                     </div>
@@ -453,7 +435,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="./img/profile-14.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-14.jpg') }}" alt="">
                             </div>
                             <div class="ingo">
                                 <h3 class="user-name">Dave Clark</h3>
@@ -473,7 +455,7 @@
                     </div>
 
                     <div class="photo">
-                        <img src="./img/feed-2.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/feed-2.jpg') }}" alt="">
                     </div>
 
                     <div class="action-buttons">
@@ -516,7 +498,7 @@
                         <div class="create-post">
                 
                             <div class="profile-photo">
-                                <img src="./img/profile-0.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                             </div>
             
                             <div class="create">
@@ -529,13 +511,13 @@
 
                     <div class="liked-by">
                         <span>
-                            <img src="./img/profile-10.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-11.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-12.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
                         </span>
                         <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
                     </div>
@@ -560,7 +542,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="./img/profile-15.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-15.jpg') }}" alt="">
                             </div>
                             <div class="ingo">
                                 <h3 class="user-name">Michael Scott</h3>
@@ -582,7 +564,7 @@
                     </div>
 
                     <div class="photo">
-                        <img src="./img/feed-3.jpg" alt="">
+                        <img src="{{ url_for('static', filename='img/feed-3.jpg') }}" alt="">
                     </div>
 
                     <div class="action-buttons">
@@ -625,7 +607,7 @@
                         <div class="create-post">
                 
                             <div class="profile-photo">
-                                <img src="./img/profile-0.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/profile-0.jpg') }}" alt="">
                             </div>
             
                             <div class="create">
@@ -638,13 +620,13 @@
 
                     <div class="liked-by">
                         <span>
-                            <img src="./img/profile-10.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-10.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-11.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-11.jpg') }}" alt="">
                         </span>
                         <span>
-                            <img src="./img/profile-12.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-12.jpg') }}" alt="">
                         </span>
                         <p>Liked by <b>Lyle Okoth</b> and 10 others<b></b> </p>
                     </div>
@@ -699,7 +681,7 @@
                 <div class="message">
                     <div class="message-content">
                         <div class="profile-photo">
-                            <img src="./img/profile-16.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-16.jpg') }}" alt="">
                             <div class="active"></div>
                         </div>
                         <div class="message-body">
@@ -719,13 +701,13 @@
                                             <span>
                                                 <i class="fa-regular fa-message"></i>
                                             </span>
-                                            <!-- <small class="active-menu menu-item">Reply</small> -->
+                                            <small class="active-menu menu-item">Reply</small>
                                         </div>
                                         <div class="befriend ctx-menu">
                                             <span>
                                                 <i class="fa-regular fa-rectangle-xmark"></i>
                                             </span>
-                                            <!-- <small class="menu-item">Close</small> -->
+                                            <small class="menu-item">Close</small>
                                         </div>
                                         
                                     </div>
@@ -739,7 +721,7 @@
                 <div class="message">
                     <div class="message-content">
                         <div class="profile-photo">
-                            <img src="./img/profile-17.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-17.jpg') }}" alt="">
                             <div class="active"></div>
                         </div>
                         <div class="message-body">
@@ -756,9 +738,9 @@
                                 <div class="dropdownmenu">
                                     <div class="card">
                                         <div class="message ctx-menu active">
-                                            <!-- <span>
+                                            <span>
                                                 <i class="uil uil-comment-add" id="message-user"></i>
-                                            </span> -->
+                                            </span>
                                             <span>
                                                 <i class="fa-regular fa-message"></i>
                                             </span>
@@ -766,9 +748,9 @@
                                         </div>
                                         <div class="befriend ctx-menu">
                                             <span>
-                                                <!-- <i class="uil uil-user-check" id="message-user"></i> -->
+                                                <i class="uil uil-user-check" id="message-user"></i>
                                                 <i class="fa-solid fa-rectangle-xmark"></i>
-                                                <!-- <i class="fa-regular fa-user-plus" id="message-user"></i> -->
+                                                <i class="fa-regular fa-user-plus" id="message-user"></i>
                                             </span>
                                             <small class="menu-item">Close</small>
                                         </div>
@@ -784,7 +766,7 @@
                 <div class="message">
                     <div class="message-content">
                         <div class="profile-photo">
-                            <img src="./img/profile-18.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-18.jpg') }}" alt="">
                             <div class="active"></div>
                         </div>
                         <div class="message-body">
@@ -824,7 +806,7 @@
                 <div class="message">
                     <div class="message-content">
                         <div class="profile-photo">
-                            <img src="./img/profile-18.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-18.jpg') }}" alt="">
                             <div class="active"></div>
                         </div>
                         <div class="message-body">
@@ -876,7 +858,7 @@
                 <div class="request" id="request-div">
                     <div class="info">
                         <div class="profile-photo">
-                            <img src="./img/profile-4.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-4.jpg') }}" alt="">
                         </div>
                         <div>
                             <h5>Aisha Lik</h5>
@@ -898,7 +880,7 @@
                 <div class="request" id="request-div">
                     <div class="info">
                         <div class="profile-photo">
-                            <img src="./img/profile-5.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-5.jpg') }}" alt="">
                         </div>
                         <div>
                             <h5>Jammie Lann</h5>
@@ -920,7 +902,7 @@
                 <div class="request" id="request-div">
                     <div class="info">
                         <div class="profile-photo">
-                            <img src="./img/profile-6.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-6.jpg') }}" alt="">
                         </div>
                         <div>
                             <h5>Sam Jessie</h5>
@@ -942,7 +924,7 @@
                 <div class="request" id="request-div">
                     <div class="info">
                         <div class="profile-photo">
-                            <img src="./img/profile-4.jpg" alt="">
+                            <img src="{{ url_for('static', filename='img/profile-4.jpg') }}" alt="">
                         </div>
                         <div>
                             <h5>Aisha Lik</h5>
