@@ -21,7 +21,8 @@
                 <input type="search" name="" id="" placeholder="Search for creators, inspirations and projects.">
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create post">Create Post</label>
+                <!-- <label class="btn btn-primary" for="create post" id="create-post-btn-top">Create Post</label> -->
+                <button class="btn btn-primary" id="create-post-btn-top">Create Post</button>
                 <div class="profile-photo">
                     <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                 </div>
@@ -266,20 +267,21 @@
         
                         <div class="create-post" id="new-post">
                         
-                            <div class="profile-photo">
-                                <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
+                            <form action="{{ url_for('post.create_post') }}" method="post" id="create-post-form" enctype = "multipart/form-data">
+                                <div class="profile-photo">
+                                    <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
+                                </div>
+                
+                                <div class="create">
+                                    <input type="text" name="post" id="create-post" placeholder="What's on your mind, {{ current_user.username }}?">
+                                    <label class="custom-file-upload">
+                                        <input type="file" name="file" onchange="previewImage(event);" accept="image/png, image/jpeg"/>
+                                        <i class="uil uil-image-plus"></i> 
+                                    </label>
                             </div>
             
-                            <div class="create">
-                                <input type="text" name="" id="create-post" placeholder="What's on your mind, {{ current_user.username }}?">
-                                <label class="custom-file-upload">
-                                    <input type="file" onchange="previewImage(event);"/>
-                                    <i class="uil uil-image-plus"></i> 
-                                </label>
-                            </div>
-            
-                            <button type="submit" class="btn btn-primary" id="cr">Post</button>
-                            
+                            <button type="submit" class="btn btn-primary create-1" id="cr" >Create Post</button>
+                        </form>
                         </div>
         
                     </div>
@@ -945,10 +947,10 @@
 
             </div>
 
-        </div>
+        </div> 
         <!--------- END OF RIGHT ----------->
 
-        </div>
+        <!-- </div> -->
 
     </main>
 
@@ -1044,27 +1046,27 @@
 
                 <h1>Update Profile</h1>
 
-                <form action="">
+                <form action="{{ url_for('auth.update')}}" method="post" id="update-user-form" enctype="multipart/form-data">
                     <div class="input-group">
 
                         <div class="user-profile-image">
                             <div class="profile-photo update">
-                                <img src="./img/profile-13.jpg" alt="">
+                                <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="">
                             </div>
     
-                            <label class="custom-file-upload">
-                                <i class="uil uil-image-plus" id="post-image-upload"></i> 
-                            </label>
+                            <input type="file" class="avatar-input" id="avatar" name="file"
+                                accept="image/png, image/jpeg">
+
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-user-circle"></i>
-                            <input type="text" name="" placeholder="Name" id="">
+                            <input type="text" name="name" placeholder="Name" id="">
                         </div>
 
                         <div class="input-field">
                             <i class="uil uil-envelope-alt"></i>
-                            <input type="email" name="" placeholder="Email" id="">
+                            <input type="email" name="email" placeholder="Email" id="">
                         </div>
 
                         <div class="input-field">
@@ -1075,7 +1077,7 @@
                     </div>
 
                     <div class="btn-field">
-                        <button type="button">Update Profile</button>
+                        <button type="submit">Update Profile</button>
                     </div>
 
                 </form>
@@ -1104,8 +1106,8 @@
 
     </div>
 
-    <!--------- EDIT POST ----------->    
-    <div class="edit-post">
+    <!--------- EDIT POST -----------> 
+    <form class="edit-post" action="{{ url_for('post.update_post', post_id='1') }}" method="put" enctype = "multipart/form-data">  
 
         <div class="card">
 
@@ -1123,11 +1125,23 @@
                         </div>
                     </div>
 
+                    <!-- <span class="edit">
+                        <label class="custom-file-upload">
+                            <i class="uil uil-image-plus post-image-upload"></i> 
+                        </label>
+                    </span> -->
+
                     <span class="edit">
                         <label class="custom-file-upload">
                             <i class="uil uil-image-plus post-image-upload"></i> 
                         </label>
                     </span>
+                    
+
+                    <!-- <label class="custom-file-upload">
+                        <input type="file" name="file" accept="image/png, image/jpeg"/>
+                        <i class="uil uil-image-plus"></i> 
+                    </label> -->
 
                 </div>
 
@@ -1142,7 +1156,7 @@
                     </div>
     
                     <div class="create">
-                        <input type="text" name="" id="create-post" placeholder="What's on your mind, Lyle?">
+                        <input type="text" name="post" id="create-post" placeholder="What's on your mind, Lyle?">
                     </div>
 
                     <button type="submit" class="btn btn-primary submit-edited-post">Post</button>
@@ -1153,7 +1167,7 @@
 
         </div>
 
-    </div>
+    </form> 
 
     <!--------- POST COMMENTS -----------> 
     <div class="post-comments">
@@ -1234,7 +1248,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     <script src="./js/charts.js"></script>
 
 </body>

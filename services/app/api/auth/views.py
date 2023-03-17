@@ -20,7 +20,7 @@ send_reset_email:
     Send the password reset email
 """
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, logout_user
 
 from ..utils.http_status_codes import HTTP_200_OK, HTTP_307_TEMPORARY_REDIRECT
@@ -99,3 +99,12 @@ def logout():
     """Logout a logged in user."""
     logout_user()
     return redirect(url_for("auth.login")), HTTP_307_TEMPORARY_REDIRECT
+
+
+@login_required
+@auth.route("/update", methods=["POST"])
+def update():
+    """Update a logged in user."""
+    print(request.form)
+    print(request.files)
+    return jsonify({"resp": "data received"})

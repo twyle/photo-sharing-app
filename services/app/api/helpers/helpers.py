@@ -19,6 +19,7 @@ from ..config.config import Config
 from ..exceptions.exceptions import DatabaseNotConnectedException
 from ..extensions.extensions import bcrypt, cors, db, login_manager, ma, mail, migrate
 from ..home.views import home
+from ..post.views import post
 from ..utils.utils import check_if_database_exists, create_db_conn_string
 
 load_dotenv()
@@ -67,6 +68,7 @@ def register_blueprints(app: Flask) -> bool:
         Whether all the blueprints were registered.
     """
     app.register_blueprint(home)
+    app.register_blueprint(post)
     app.register_blueprint(auth, url_prefix="/auth")
     return True
 
