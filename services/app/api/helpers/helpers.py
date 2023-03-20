@@ -51,7 +51,9 @@ def check_configuration():
     """Check if all the configs are set."""
     # Check database connection
     if not check_if_database_exists(create_db_conn_string()):
-        raise DatabaseNotConnectedException("The database is not connected!")
+        raise DatabaseNotConnectedException(
+            f"The database is not connected! {create_db_conn_string()}"
+        )
 
 
 def register_blueprints(app: Flask) -> bool:
