@@ -68,7 +68,7 @@ jobs:
         echo FLASK_ENV=${{secrets.FLASK_ENV}} >> .env
         echo FLASK_DEBUG=${{secrets.FLASK_DEBUG}} >> .env
         echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
-        echo POSTGRES_HOST=postgres >> .env
+        echo POSTGRES_HOST=0.0.0.0 >> .env
         echo POSTGRES_DB=lyle >> .env
         echo POSTGRES_PORT=5432 >> .env
         echo POSTGRES_USER=lyle >> .env
