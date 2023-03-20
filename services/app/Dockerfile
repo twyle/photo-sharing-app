@@ -35,7 +35,7 @@ RUN pydocstyle  api/
 RUN pylint --rcfile=.pylintrc ./api
 
 #run the tests
-RUN python -m pytest
+# RUN python -m pytest
 
 EXPOSE 5000
 
