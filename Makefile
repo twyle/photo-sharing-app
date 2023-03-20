@@ -8,10 +8,10 @@ install-dev:
 	@pip install -r services/app/requirements-dev.txt
 
 test:
-	@python -m pytest
+	@python -m pytest --disable-warnings
 
 coverage:
-	@coverage run -m pytest 
+	@coverage run -m pytest --disable-warnings
 	@coverage report -m
 
 run:

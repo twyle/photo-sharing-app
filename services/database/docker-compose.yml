@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - photo_sharing_app:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    ports:
+      - 5432:5432
+
+volumes:
+  photo_sharing_app:

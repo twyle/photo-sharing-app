@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Login</title>
+</head>
+<body>
+    
+    <main>
+        <div class="container">
+            <div class="form-box">
+
+                <h1>Login</h1>
+
+                <form action="" method="post">
+                    <div class="input-group">
+
+                        {% if error_message %}
+                            <div class="input-field error">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+
+                            <div class="input-field error">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                        {% endif %}
+
+                        {% if email %}
+                            <p>
+                                Account not activated? <a href="{{ url_for('auth.send_confirm_account_email', email=email) }}">Click to get activation link in your email.</a>
+                            </p>
+                        {% else %}
+
+                            <p>
+                                Don't have an account? <a href="{{ url_for('auth.register') }}">Create One</a> <br>
+                                Forgot your password? <a href="{{ url_for('auth.reset_request') }}">Click to reset</a>
+
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="btn-field">
+                        <button type="submit">Sign In</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

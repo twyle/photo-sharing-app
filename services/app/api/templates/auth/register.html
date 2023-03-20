@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Sign up</title>
+</head>
+<body>
+    
+    <main>
+        <div class="container">
+            <div class="form-box">
+
+                <h1>Sign Up</h1>
+
+                <form action="" method="post" enctype = "multipart/form-data">
+                    <div class="input-group">
+
+                        <div class="user-profile-image">
+                            <div class="profile-photo update">
+                                <img src="{{ url_for('static', filename='img/default.jpeg') }}" alt="" class="user-avatar">
+                            </div>
+    
+                            <input type="file" class="avatar-input" id="avatar" name="file"
+                                accept="image/png, image/jpeg">
+                        </div>
+
+                        {% if error_message and 'name' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-user-circle"></i>
+                                <input type="text" name="name" placeholder="NameError">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['name'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-user-circle"></i>
+                                <input type="text" name="name" placeholder="Name">
+                            </div>
+                        {% endif %}
+
+                        {% if error_message and 'email' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['email'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-envelope-alt"></i>
+                                <input type="email" name="email" placeholder="Email" id="">
+                            </div>
+                        {% endif %}
+
+                        {% if error_message and 'password' in error_message.keys() %}
+                            <div class="input-field error">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['password'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="password" placeholder="Password" id="">
+                            </div>
+                        {% endif %}
+
+                        {% if error_message and 'confirm_password' in error_message.keys() %}
+                            <div class="input-field errors">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="confirm_password" placeholder="Confirm Password" id="">
+                            </div>
+                            <div class="error-msg">
+                                <p>
+                                    {{ error_message['confirm_password'] }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="input-field">
+                                <i class="uil uil-padlock"></i>
+                                <input type="password" name="confirm_password" placeholder="Confirm Password" id="">
+                            </div>
+                        {% endif %}
+
+                        <p>
+                            Already have an account? <a href="{{ url_for('auth.login') }}">Login</a>
+                        </p>
+
+                    </div>
+
+                    <div class="btn-field">
+                        <button type="submit">Sign Up</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+
+</body>
+</html>

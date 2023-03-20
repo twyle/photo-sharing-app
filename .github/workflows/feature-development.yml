@@ -14,21 +14,21 @@ jobs:
     environment:
       name: Test
 
-    # services:
-    #   postgres:
-    #     image: postgres
-    #     env:
-    #       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
-    #       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-    #       POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
-    #       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-    #     ports:
-    #       - 5432:5432
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     strategy:
       matrix:
@@ -68,7 +68,7 @@ jobs:
         echo FLASK_ENV=${{secrets.FLASK_ENV}} >> .env
         echo FLASK_DEBUG=${{secrets.FLASK_DEBUG}} >> .env
         echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
-        echo POSTGRES_HOST=${{secrets.POSTGRES_HOST}} >> .env
+        echo POSTGRES_HOST=0.0.0.0 >> .env
         echo POSTGRES_DB=${{secrets.POSTGRES_DB}} >> .env
         echo POSTGRES_PORT=${{secrets.POSTGRES_PORT}} >> .env
         echo POSTGRES_USER=${{secrets.POSTGRES_USER}} >> .env
@@ -85,9 +85,16 @@ jobs:
         echo LOGGER_HOST=${{secrets.LOGGER_HOST}} >> .env
         echo LOGGER_PORT=${{secrets.LOGGER_PORT}} >> .env
 
-    # - name: Create the test tables
-    #   run: |
-    #     python ./services/app/manage.py create_db
+        echo MAIL_USERNAME=${{secrets.MAIL_USERNAME}} >> .env
+        echo MAIL_PASSWORD=${{secrets.MAIL_PASSWORD}} >> .env
+        echo MAIL_SERVER=${{secrets.MAIL_SERVER}} >> .env
+        echo MAIL_PORT=${{secrets.MAIL_PORT}} >> .env
+        echo MAIL_USE_SSL=${{secrets.MAIL_USE_SSL}} >> .env
+        echo MAIL_DEFAULT_SENDER=${{secrets.MAIL_DEFAULT_SENDER}} >> .env
+
+    - name: Create the test tables 
+      run: |
+        python ./services/app/manage.py create_db
 
     - name: Test with pytest
       run: |
@@ -109,21 +116,21 @@ jobs:
     environment:
       name: Development
 
-    # services:
-    #   postgres:
-    #     image: postgres
-    #     env:
-    #       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
-    #       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
-    #       POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
-    #       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
-    #     ports:
-    #       - 5432:5432
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     needs: [Build]
 
@@ -153,7 +160,7 @@ jobs:
         echo FLASK_ENV=${{secrets.FLASK_ENV}} >> .env
         echo FLASK_DEBUG=${{secrets.FLASK_DEBUG}} >> .env
         echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
-        echo POSTGRES_HOST=${{secrets.POSTGRES_HOST}} >> .env
+        echo POSTGRES_HOST=0.0.0.0 >> .env
         echo POSTGRES_DB=${{secrets.POSTGRES_DB}} >> .env
         echo POSTGRES_PORT=${{secrets.POSTGRES_PORT}} >> .env
         echo POSTGRES_USER=${{secrets.POSTGRES_USER}} >> .env
@@ -170,9 +177,16 @@ jobs:
         echo LOGGER_HOST=${{secrets.LOGGER_HOST}} >> .env
         echo LOGGER_PORT=${{secrets.LOGGER_PORT}} >> .env
 
-    # - name: Create the development tables
-    #   run: |
-    #     python ./services/app/manage.py create_db
+        echo MAIL_USERNAME=${{secrets.MAIL_USERNAME}} >> .env
+        echo MAIL_PASSWORD=${{secrets.MAIL_PASSWORD}} >> .env
+        echo MAIL_SERVER=${{secrets.MAIL_SERVER}} >> .env
+        echo MAIL_PORT=${{secrets.MAIL_PORT}} >> .env
+        echo MAIL_USE_SSL=${{secrets.MAIL_USE_SSL}} >> .env
+        echo MAIL_DEFAULT_SENDER=${{secrets.MAIL_DEFAULT_SENDER}} >> .env
+
+    - name: Create the development tables
+      run: |
+        python ./services/app/manage.py create_db
 
     - name: Test application
       run: |
