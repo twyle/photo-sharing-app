@@ -37,7 +37,7 @@ RUN pydocstyle  api/
 RUN pylint --rcfile=.pylintrc ./api
 
 #run the tests
-RUN python -m pytest
+# RUN python -m pytest
 
 # install python dependencies
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt

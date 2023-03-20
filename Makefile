@@ -35,3 +35,6 @@ build-prod:
 
 run-prod:
 	@docker run -p5000:5000 --env-file=./services/app/.env photo-sharing-app-prod:latest
+
+dev:
+	@docker-compose -f docker-compose-dev.yaml up --build

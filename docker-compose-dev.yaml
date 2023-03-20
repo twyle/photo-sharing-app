@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  photo-sharing-app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile
+    volumes:
+        - .:/usr/src/app
+    expose:  # new
+      - 5000
+    env_file:
+      - ./services/app/.env
+    labels:  # new
+      - "traefik.enable=true"
+      - "traefik.http.routers.flask.rule=Host(`flask.localhost`)"
+
+  traefik:  # new
+    image: traefik:v2.2
+    ports:
+      - 80:80
+      - 8081:8080
+    volumes:
+      - "./services/traefik/traefik.dev.toml:/etc/traefik/traefik.toml"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
