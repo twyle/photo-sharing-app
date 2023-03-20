@@ -177,6 +177,18 @@ const postCommentsBox = document.querySelector('.post-comments')
 
 //Message actions
 const messageActionButtons = document.querySelectorAll('.message-actions-buttons')
+//Message actions
+messageActionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        nextSibling = btn.nextElementSibling
+        dropDownMenu = nextSibling.querySelector('.dropdownmenu')
+        dropDownMenu.style.display = 'block'
+
+        setTimeout(() => {
+            dropDownMenu.style.display = 'none'
+        }, 3000)
+    })
+})
 
 //Submite edited post
 const submitEdittedPostButtons = document.querySelectorAll('.submit-edited-post')
@@ -187,26 +199,27 @@ let oldPost;
 //Post Image update
 let image;
 const uploadPostImageButtons = document.querySelectorAll('.post-image-upload')
-uploadPostImageButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        var input = document.createElement('input');
-    input.type = 'file';
 
-    input.onchange = event => { 
-        const imageFiles = event.target.files
-        const imageFilesLength = imageFiles.length
-        if (imageFilesLength > 0){
-            image = imageFiles[0]
-            const imageSrc = URL.createObjectURL(imageFiles[0])
-            editPostPhoto = editBox.querySelector('.photo')
-            editPhoto = editPostPhoto.querySelector('img')
-            editPhoto.src = imageSrc
-        }
-     }
+// uploadPostImageButtons.forEach(btn => {
+//     btn.addEventListener('click', () => {
+//         var input = document.createElement('input');
+//     input.type = 'file';
 
-    input.click();
-    })
-})
+//     input.onchange = event => { 
+//         const imageFiles = event.target.files
+//         const imageFilesLength = imageFiles.length
+//         if (imageFilesLength > 0){
+//             image = imageFiles[0]
+//             const imageSrc = URL.createObjectURL(imageFiles[0])
+//             editPostPhoto = editBox.querySelector('.photo')
+//             editPhoto = editPostPhoto.querySelector('img')
+//             editPhoto.src = imageSrc
+//         }
+//      }
+
+//     input.click();
+//     })
+// })
 
 //REPLY TO MESSAGE
 const replyButtons = document.querySelectorAll('.fa-message')
@@ -231,6 +244,12 @@ closeMessageButtons.forEach(btn => {
         const message = btn.closest('.message')
         message.remove()
     })
+})
+
+// Send reply
+const replyMessageButon = document.querySelector('#reply-message-button')
+replyMessageButon.addEventListener('click', e => {
+    messageBox.style.display = 'none'
 })
 
 menuItems.forEach(item => {
@@ -838,17 +857,3 @@ const closePostCommentsModal = (e) => {
 
 //close modal
 postCommentsBox.addEventListener('click', closePostCommentsModal);
-
-
-//Message actions
-messageActionButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        nextSibling = btn.nextElementSibling
-        dropDownMenu = nextSibling.querySelector('.dropdownmenu')
-        dropDownMenu.style.display = 'block'
-
-        setTimeout(() => {
-            dropDownMenu.style.display = 'none'
-        }, 3000)
-    })
-})

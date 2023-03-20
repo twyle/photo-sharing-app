@@ -57,8 +57,8 @@ def send_confirm_account_email():
 @auth.route("/confirm_account", methods=["GET"])
 def confirm_account():
     """Confirm a newly created account."""
-    if current_user.is_authenticated:
-        return redirect(url_for("home.home_page"))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for("home.home_page"))
     token = request.args.get("token")
     return handle_confirm_account(token)
 
