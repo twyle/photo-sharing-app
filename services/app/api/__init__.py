@@ -1,5 +1,5 @@
 """The main application package."""
-import sys
+# import sys
 
 from dotenv import load_dotenv
 from flask import Flask
@@ -28,7 +28,7 @@ def create_app() -> Flask:
         check_configuration()
     except DatabaseNotConnectedException as e:
         print(str(e))
-        sys.exit(1)
+        # sys.exit(1)
 
     register_extensions(app)
     register_blueprints(app=app)
