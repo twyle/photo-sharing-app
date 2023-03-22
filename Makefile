@@ -17,6 +17,9 @@ coverage:
 run:
 	@python services/app/manage.py run
 
+gunicorn:
+	@cd services/app && gunicorn -b 0.0.0.0:5000 manage:app
+
 lint:
 	@black services/app
 	@isort services/app
